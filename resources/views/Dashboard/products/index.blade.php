@@ -34,6 +34,7 @@
               <thead>
               <tr>
                 <th>#</th>
+                <th>{{ trans('admin.image') }}</th>
                 <th>{{ trans('admin.Name') }}</th>
                 <th>{{ trans('admin.price') }}</th>
                 <th>{{ trans('admin.description') }}</th>
@@ -46,6 +47,7 @@
                   @foreach ($products as $product)
                       <tr>
                           <td>{{$product->id}}</td>
+                          <td><img src="{{$product->getImage()}}" style="width: 70px;"></td>
                           <td>{{$product->name}}</td>
                           <td>{{$product->price}}</td>
                           <td>{{$product->description}}</td>

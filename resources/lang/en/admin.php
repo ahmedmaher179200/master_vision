@@ -116,6 +116,6 @@ return [
     'category'  => 'category',
     'orders'  => 'orders',
     'price'  => 'price',
-    ''  => '',
+    'image'  => 'image',
     ''  => '',
 ];

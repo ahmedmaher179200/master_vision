@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Image;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -31,7 +32,16 @@ class ProductController extends Controller
         try{
             DB::beginTransaction();
                 $input = $request->only('name', 'description', 'category_id', 'price');
-                Product::create($input);
+                $product = Product::create($input);
+
+                if($request->hasfile('image')){
+                    $path = $this->uploadImage($request->file('image'), 'uploads/images');
+                    Image::create([
+                        'imageable_id'   => $product->id,
+                        'imageable_type' => 'App\Models\Product',
+                        'src'            => $path,
+                    ]);
+                }
             DB::commit();
             return redirect('dashboard/products')->with('success', 'success');
         } catch(\Exception $ex){
@@ -58,6 +68,29 @@ class ProductController extends Controller
         try{
             DB::beginTransaction();
                 $product->update($input);
+
+                if($request->hasfile('image')){
+                    $path = $this->uploadImage($request->file('image'), 'uploads/images');
+
+                    if($product->Image == null){
+                        //if user don't have image 
+                        Image::create([
+                            'imageable_id'   => $product->id,
+                            'imageable_type' => 'App\Models\Product',
+                            'src'            => $path,
+                        ]);
+                    } else {
+                        //ig user have image
+                        $oldImage = $product->Image->src;
+            
+                        if(file_exists(base_path('public/uploads/images/') . $oldImage))
+                            unlink(base_path('public/uploads/images/') . $oldImage);
+            
+                        $product->Image->src = $path;
+                        $product->Image->save();
+                    }
+                }
+
             DB::commit();
             return redirect('dashboard/products')->with('success', 'success');
         } catch(\Exception $ex){

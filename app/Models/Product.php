@@ -20,4 +20,17 @@ class Product extends Model
     public function Shops(){
         return $this->belongsToMany(Shop::class, 'product_shop', 'product_id', 'shop_id');
     }
+
+    public function Image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
+
+    public function getImage(){
+        if($this->Image != null){
+            return url('uploads/images/' . $this->Image->src);
+        } else {
+            return url('uploads/images/default.png');
+        }
+    }
 }

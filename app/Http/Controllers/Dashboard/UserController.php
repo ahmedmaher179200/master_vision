@@ -40,7 +40,6 @@ class UserController extends Controller
                 $data->whereRoleIs($request->role);
             }
 
-
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){

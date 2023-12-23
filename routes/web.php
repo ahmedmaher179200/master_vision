@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,7 +13,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', [Controller::class, 'products']);
+Route::get('/cart', [Controller::class, 'cart'])->name('cart');
+Route::post('/checkout', [Controller::class, 'checkout'])->name('checkout');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::post('/add-product-to-cart-ajax', [Controller::class, 'addProductToCartAjax'])->name('addProductToCartAjax');
+

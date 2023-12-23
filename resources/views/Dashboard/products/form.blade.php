@@ -17,6 +17,12 @@
             name="category_id" label="{{ trans('admin.category') }}"/>
         </div>
 
+        <div class="col-lg-6">
+            <x-form.input type="file" class="form-control" attribute="required"
+                name="image" value="{{ isset($data) ? $data->image : old('image') }}"
+                label="{{ trans('admin.image') }}"/>
+        </div>
+
         <div class="col-lg-12">
             <x-form.input type="text" class="form-control" attribute="required"
                 name="description" value="{{ isset($data) ? $data->description : old('description') }}"

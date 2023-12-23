@@ -32,7 +32,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form method="post" action="">
+                <form method="post" action="" enctype="multipart/form-data">
                     @csrf
                     @include('Dashboard.products.form')
                     <!-- /.card-body -->
